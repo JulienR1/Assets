@@ -14,7 +14,7 @@ public class Entity : MonoBehaviour, IDamageable
     protected Vector3 moveDirection;
     private float dashRefreshTime;
 
-    private void Start()
+    protected virtual void Start()
     {
         controller = this.GetComponent<EntityController>();
         this.health = stats.maxHealth;

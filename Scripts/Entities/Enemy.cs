@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
     private EntityAI ai;
     private Entity target;
     private Enums.AttackState attackState;
+
+    protected override void Start()
+    {
+        base.Start();
+        ai = this.GetComponent<EntityAI>();
+        if (ai == null)
+            Debug.LogError("No EntityAI component attached to " + gameObject.name);
+    }
 
     private void UpdateAI()
     {
