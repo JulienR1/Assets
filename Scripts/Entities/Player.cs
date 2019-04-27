@@ -1,15 +1,25 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 
 public class Player : Entity
 {
     public Camera myCamera;
     public float mouseSensitivity;
 
+    public LayerMask lookMask;
+
+    [Header("Animations")]
+    public float normalFOV = 60;
+    public float dashFOV = 70;
+    public float accelerationPercent = 0.05f;
+    private float startFOVTime, startMaxFOVTime, endMaxFOVTime, endFOVTime;
+
     private Vector3 moveInput;
     private Vector2 mouseInput;
     private Vector2 mouseVelocity;
 
     private float xAxisClamp;
+
+    private int currency;
 
     private void Awake()
     {
@@ -39,6 +49,17 @@ public class Player : Entity
         Cursor.lockState = lockMode;
     }
 
+    protected override void LookInFront()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, myCamera.transform.forward);
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 10, Color.red);
+        if(Physics.Raycast(ray,out hit))
+        {
+            print(hit.transform.gameObject.layer);
+        }
+    }
+
     private void LookAtCursor()
     {
         mouseVelocity = mouseInput * mouseSensitivity * Time.deltaTime;
@@ -66,6 +87,52 @@ public class Player : Entity
         Vector3 eulerRotation = myCamera.transform.eulerAngles;
         eulerRotation.x = value;
         myCamera.transform.eulerAngles = eulerRotation;
+    }
+
+    protected override void Animate()
+    {
+        base.Animate();
+        if (controller.GetIsDashing())
+        {
+            if (endFOVTime != controller.GetDashEndTime())
+            {
+                endFOVTime = controller.GetDashEndTime();
+                startFOVTime = endFOVTime - stats.dashTime;
+                startMaxFOVTime = endFOVTime - (1 - accelerationPercent) * stats.dashTime;
+                endMaxFOVTime = endFOVTime - accelerationPercent * stats.dashTime;
+            }
+            if (Time.time < startMaxFOVTime)
+                myCamera.fieldOfView = Mathf.Lerp(normalFOV, dashFOV, (Time.time - startFOVTime) / (startMaxFOVTime - startFOVTime));
+            else if (Time.time > endMaxFOVTime)            
+                myCamera.fieldOfView = Mathf.Lerp(dashFOV, normalFOV, (Time.time - endMaxFOVTime) / (endFOVTime - endMaxFOVTime));
+            else
+                myCamera.fieldOfView = dashFOV;
+        }
+        else
+            myCamera.fieldOfView = normalFOV;
+    }
+
+    public int GetCurrency()
+    {
+        return currency;
+    }
+
+    public bool AddCurrency(int amount)
+    {
+        if (amount < 0)
+            return false;
+        currency += amount;
+        return true;
+    }
+
+    public bool RemoveCurrency(int amount)
+    {
+        if (amount < 0)
+            return false;
+        if (amount > currency)
+            return false;
+        currency -= amount;
+        return true;
     }
 
 }

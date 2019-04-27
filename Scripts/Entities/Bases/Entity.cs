@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EntityController))]
-public class Entity : MonoBehaviour, IDamageable
+public abstract class Entity : MonoBehaviour, IDamageable
 {
     public EntityStats stats;
-    private EntityController controller;
+    protected EntityController controller;
     private int health;
 
     protected Weapon[] weapons;
@@ -14,7 +14,7 @@ public class Entity : MonoBehaviour, IDamageable
     protected Vector3 moveDirection;
     private float dashRefreshTime;
 
-    private void Start()
+    protected virtual void Start()
     {
         controller = this.GetComponent<EntityController>();
         this.health = stats.maxHealth;
@@ -23,6 +23,8 @@ public class Entity : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         Move();
+        Animate();
+        LookInFront();
     }
 
     protected void Move()
@@ -34,6 +36,8 @@ public class Entity : MonoBehaviour, IDamageable
     {
         if (Time.time > dashRefreshTime)
         {
+            if (moveDirection == Vector3.zero)
+                moveDirection = Vector3.forward;
             controller.Dash(moveDirection * stats.dashDistance / stats.dashTime, stats.dashTime);
             dashRefreshTime = Time.time + stats.dashTime + stats.dashCooldown;
         }
@@ -56,5 +60,12 @@ public class Entity : MonoBehaviour, IDamageable
         print("Killed " + gameObject.name);
         Destroy(this.gameObject);
     }
+
+    protected virtual void Animate()
+    {
+
+    }
+
+    protected abstract void LookInFront();
 
 }
