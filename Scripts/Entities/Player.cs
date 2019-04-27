@@ -57,8 +57,8 @@ public class Player : Entity
             ClampXAxisRotation(90);
         }
 
-     /*   myCamera.transform.Rotate(Vector3.left * mouseVelocity.y);
-        transform.Rotate(Vector3.up * mouseVelocity.x);*/
+        myCamera.transform.Rotate(Vector3.left * mouseVelocity.y);
+        transform.Rotate(Vector3.up * mouseVelocity.x);
     }
 
     private void ClampXAxisRotation(float value)
