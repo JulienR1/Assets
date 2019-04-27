@@ -21,6 +21,11 @@ public class Enemy : Entity
 
     }
 
+    protected override void LookInFront()
+    {
+        Debug.Log("LOOK in fRONT");
+    }
+
     private void LookAtTarget()
     {
         transform.LookAt(ai.GetNextPosition());

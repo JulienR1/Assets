@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5119104893284937823}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   mouseSensitivity: 150
   normalFOV: 60
   dashFOV: 70
-  accelerationPercent: 0.2
+  accelerationPercent: 0.25
 --- !u!1 &5119104894418578330
 GameObject:
   m_ObjectHideFlags: 0

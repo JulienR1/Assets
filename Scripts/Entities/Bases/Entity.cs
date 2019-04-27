@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EntityController))]
-public class Entity : MonoBehaviour, IDamageable
+public abstract class Entity : MonoBehaviour, IDamageable
 {
     public EntityStats stats;
     protected EntityController controller;
@@ -24,6 +24,7 @@ public class Entity : MonoBehaviour, IDamageable
     {
         Move();
         Animate();
+        LookInFront();
     }
 
     protected void Move()
@@ -64,5 +65,7 @@ public class Entity : MonoBehaviour, IDamageable
     {
 
     }
+
+    protected abstract void LookInFront();
 
 }
