@@ -461,25 +461,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8788094741272225274, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 7425409219331415801, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: minMaxVerticalAxis.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7425409219331415801, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: minMaxVerticalAxis.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 1681229465512157951, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: m_ClearFlags
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3aaf67f10137ede4cbbdc5fe4bf22049, type: 3}
