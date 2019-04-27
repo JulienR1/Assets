@@ -34,6 +34,8 @@ public class Entity : MonoBehaviour, IDamageable
     {
         if (Time.time > dashRefreshTime)
         {
+            if (moveDirection == Vector3.zero)
+                moveDirection = Vector3.forward;
             controller.Dash(moveDirection * stats.dashDistance / stats.dashTime, stats.dashTime);
             dashRefreshTime = Time.time + stats.dashTime + stats.dashCooldown;
         }
