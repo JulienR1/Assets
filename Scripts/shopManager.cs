@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class shopManager : MonoBehaviour {
 
     
-    public GameObject player;
+    public Player player;
     public GameObject canvas;
     public GameObject notEnoughMoney;
     
@@ -15,16 +15,14 @@ public class shopManager : MonoBehaviour {
 
     public GameObject item;
     public int price;
+    public float distanceMax;
 
-    public void Start() {
-
-        
+    public void inContact(Vector3 position) {
+        if (Vector3.Distance(position, transform.position) <= distanceMax)
+        {
+            shopEnabled = true;
+        }
     }
-
-    public void inContact() {
-        shopEnabled = true;
-    }
-
 
     public void Update() {
 
