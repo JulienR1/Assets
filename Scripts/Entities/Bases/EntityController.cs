@@ -43,6 +43,6 @@ public class EntityController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidBody.MovePosition(transform.position + moveVelocity * Time.fixedDeltaTime);
+        rigidBody.MovePosition(transform.position + transform.TransformDirection(moveVelocity) * Time.fixedDeltaTime);
     }
 }
