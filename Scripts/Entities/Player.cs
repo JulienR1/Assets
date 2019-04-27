@@ -19,6 +19,7 @@ public class Player : Entity
 
     private float xAxisClamp;
 
+    private shopManager shop;
     private int currency;
 
     private void Awake()
@@ -52,11 +53,20 @@ public class Player : Entity
     protected override void LookInFront()
     {
         RaycastHit hit;
-        Ray ray = new Ray(transform.position, myCamera.transform.forward);
-        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 10, Color.red);
+        Ray ray = new Ray(myCamera.transform.position, myCamera.transform.forward);
         if(Physics.Raycast(ray,out hit))
         {
-            print(hit.transform.gameObject.layer);
+            switch (hit.transform.gameObject.tag)
+            {
+                case "Shop":
+                    if (shop == null)
+                        shop = hit.transform.GetComponent<shopManager>();
+                    shop.inContact(transform.position);
+                    break;
+                case "Enemy":
+                    print("yello");
+                    break;
+            }
         }
     }
 
