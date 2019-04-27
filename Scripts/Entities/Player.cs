@@ -22,6 +22,8 @@ public class Player : Entity
     private shopManager shop;
     private int currency;
 
+    private Enemy currentEnemy;
+
     private void Awake()
     {
         SetCusorLock(CursorLockMode.Locked);
@@ -59,12 +61,11 @@ public class Player : Entity
             switch (hit.transform.gameObject.tag)
             {
                 case "Shop":
-                    if (shop == null)
-                        shop = hit.transform.GetComponent<shopManager>();
+                    shop = hit.transform.GetComponent<shopManager>();
                     shop.inContact(transform.position);
                     break;
                 case "Enemy":
-                    print("yello");
+                    currentEnemy = hit.transform.GetComponent<Enemy>();
                     break;
             }
         }

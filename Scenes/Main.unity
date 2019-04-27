@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 523235231}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -552,33 +552,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5119104893284937823, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
         type: 3}
-      propertyPath: accelerationPercent
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5119104893284937823, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: dashFOV
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 5089025871898110617, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: normalsSensitivity
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5089025871898110617, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: debugMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5089025871898110617, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: depthSensitivity
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5089025871898110617, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: depthSensitivity2
-      value: 0.2
+      propertyPath: lookMask.m_Bits
+      value: 768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3aaf67f10137ede4cbbdc5fe4bf22049, type: 3}

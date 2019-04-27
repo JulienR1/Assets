@@ -12,6 +12,10 @@ public class WeaponStatsEditor : Editor
         GUIStyle style = new GUIStyle();
         style.richText = true;
 
+        controller.itemCost = Mathf.Clamp(EditorGUILayout.IntField("Item cost", controller.itemCost), 0, int.MaxValue);
+
+        EditorGUILayout.Space();
+
         string attackTitle = (controller.attackType == Enums.AttackType.RANGE) ? "Min Damage" : "Damage";
         controller.attackDamage = Mathf.Clamp(EditorGUILayout.IntField(attackTitle, controller.attackDamage), 0, int.MaxValue);
         if (controller.attackType == Enums.AttackType.RANGE)

@@ -23,7 +23,17 @@ public class Enemy : Entity
 
     protected override void LookInFront()
     {
-        Debug.Log("LOOK in fRONT");
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, transform.forward);
+        if (Physics.Raycast(ray, out hit))
+        {
+            switch (hit.transform.gameObject.tag)
+            {
+                case "Player":
+                    target = hit.transform.GetComponent<Player>();
+                    break;
+            }
+        }
     }
 
     private void LookAtTarget()
