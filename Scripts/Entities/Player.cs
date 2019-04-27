@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 
 public class Player : Entity
 {
@@ -88,16 +88,13 @@ public class Player : Entity
             }
             if (Time.time < startMaxFOVTime)
                 myCamera.fieldOfView = Mathf.Lerp(normalFOV, dashFOV, (Time.time - startFOVTime) / (startMaxFOVTime - startFOVTime));
-            else if (Time.time > endMaxFOVTime)
-                myCamera.fieldOfView = Mathf.Lerp(dashFOV, normalFOV, (Time.time - startFOVTime) / (endFOVTime - endMaxFOVTime));
+            else if (Time.time > endMaxFOVTime)            
+                myCamera.fieldOfView = Mathf.Lerp(dashFOV, normalFOV, (Time.time - endMaxFOVTime) / (endFOVTime - endMaxFOVTime));
             else
                 myCamera.fieldOfView = dashFOV;
-            myCamera.fieldOfView = dashFOV;
         }
         else
-        {
             myCamera.fieldOfView = normalFOV;
-        }
     }
 
 }
