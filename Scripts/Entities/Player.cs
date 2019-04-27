@@ -2,7 +2,6 @@
 
 public class Player : Entity
 {
-    public Camera mainCamera;
     private Vector3 moveInput;
 
     protected override void Update()
