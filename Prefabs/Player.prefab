@@ -264,3 +264,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 573f36c3e036a164da6ac09fe621dac9, type: 2}
+  myCamera: {fileID: 1681229465512157951}
+  mouseSensitivity: 150
+  minMaxVerticalAxis: {x: -90, y: 90}
