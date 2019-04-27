@@ -5,6 +5,8 @@ public class Player : Entity
     public Camera myCamera;
     public float mouseSensitivity;
 
+    public LayerMask lookMask;
+
     [Header("Animations")]
     public float normalFOV = 60;
     public float dashFOV = 70;
@@ -16,6 +18,8 @@ public class Player : Entity
     private Vector2 mouseVelocity;
 
     private float xAxisClamp;
+
+    private int currency;
 
     private void Awake()
     {
@@ -43,6 +47,17 @@ public class Player : Entity
     private void SetCusorLock(CursorLockMode lockMode)
     {
         Cursor.lockState = lockMode;
+    }
+
+    protected override void LookInFront()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, myCamera.transform.forward);
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 10, Color.red);
+        if(Physics.Raycast(ray,out hit))
+        {
+            print(hit.transform.gameObject.layer);
+        }
     }
 
     private void LookAtCursor()
@@ -95,6 +110,29 @@ public class Player : Entity
         }
         else
             myCamera.fieldOfView = normalFOV;
+    }
+
+    public int GetCurrency()
+    {
+        return currency;
+    }
+
+    public bool AddCurrency(int amount)
+    {
+        if (amount < 0)
+            return false;
+        currency += amount;
+        return true;
+    }
+
+    public bool RemoveCurrency(int amount)
+    {
+        if (amount < 0)
+            return false;
+        if (amount > currency)
+            return false;
+        currency -= amount;
+        return true;
     }
 
 }

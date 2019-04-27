@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EntityController))]
-public class Entity : MonoBehaviour, IDamageable
+public abstract class Entity : MonoBehaviour, IDamageable
 {
     public EntityStats stats;
     protected EntityController controller;
@@ -14,7 +14,7 @@ public class Entity : MonoBehaviour, IDamageable
     protected Vector3 moveDirection;
     private float dashRefreshTime;
 
-    private void Start()
+    protected virtual void Start()
     {
         controller = this.GetComponent<EntityController>();
         this.health = stats.maxHealth;
@@ -24,6 +24,7 @@ public class Entity : MonoBehaviour, IDamageable
     {
         Move();
         Animate();
+        LookInFront();
     }
 
     protected void Move()
@@ -64,5 +65,7 @@ public class Entity : MonoBehaviour, IDamageable
     {
 
     }
+
+    protected abstract void LookInFront();
 
 }
