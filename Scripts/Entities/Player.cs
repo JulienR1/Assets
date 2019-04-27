@@ -5,6 +5,12 @@ public class Player : Entity
     public Camera myCamera;
     public float mouseSensitivity;
 
+    [Header("Animations")]
+    public float normalFOV = 60;
+    public float dashFOV = 70;
+    public float accelerationPercent = 0.05f;
+    private float startFOVTime, startMaxFOVTime, endMaxFOVTime, endFOVTime;
+
     private Vector3 moveInput;
     private Vector2 mouseInput;
     private Vector2 mouseVelocity;
@@ -66,6 +72,32 @@ public class Player : Entity
         Vector3 eulerRotation = myCamera.transform.eulerAngles;
         eulerRotation.x = value;
         myCamera.transform.eulerAngles = eulerRotation;
+    }
+
+    protected override void Animate()
+    {
+        base.Animate();
+        if (controller.GetIsDashing())
+        {
+            if (endFOVTime != controller.GetDashEndTime())
+            {
+                endFOVTime = controller.GetDashEndTime();
+                startFOVTime = endFOVTime - stats.dashTime;
+                startMaxFOVTime = endFOVTime - (1 - accelerationPercent) * stats.dashTime;
+                endMaxFOVTime = endFOVTime - accelerationPercent * stats.dashTime;
+            }
+            if (Time.time < startMaxFOVTime)
+                myCamera.fieldOfView = Mathf.Lerp(normalFOV, dashFOV, (Time.time - startFOVTime) / (startMaxFOVTime - startFOVTime));
+            else if (Time.time > endMaxFOVTime)
+                myCamera.fieldOfView = Mathf.Lerp(dashFOV, normalFOV, (Time.time - startFOVTime) / (endFOVTime - endMaxFOVTime));
+            else
+                myCamera.fieldOfView = dashFOV;
+            myCamera.fieldOfView = dashFOV;
+        }
+        else
+        {
+            myCamera.fieldOfView = normalFOV;
+        }
     }
 
 }

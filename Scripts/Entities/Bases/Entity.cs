@@ -6,7 +6,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour, IDamageable
 {
     public EntityStats stats;
-    private EntityController controller;
+    protected EntityController controller;
     private int health;
 
     protected Weapon[] weapons;
@@ -23,6 +23,7 @@ public class Entity : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         Move();
+        Animate();
     }
 
     protected void Move()
@@ -57,6 +58,11 @@ public class Entity : MonoBehaviour, IDamageable
     {
         print("Killed " + gameObject.name);
         Destroy(this.gameObject);
+    }
+
+    protected virtual void Animate()
+    {
+
     }
 
 }

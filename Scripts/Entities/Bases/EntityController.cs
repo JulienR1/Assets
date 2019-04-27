@@ -17,6 +17,16 @@ public class EntityController : MonoBehaviour
         this.rigidBody = this.GetComponent<Rigidbody>();
     }
 
+    public bool GetIsDashing()
+    {
+        return isDashing;
+    }
+
+    public float GetDashEndTime()
+    {
+        return dashEndTime;
+    }
+
     public void Move(Vector3 moveVelocity)
     {
         this.moveVelocity = moveVelocity;
