@@ -30,21 +30,21 @@ public class AStarGrid : MonoBehaviour
     {
         grid = new Node[gridSizeX, gridSizeY];
         Vector3 bottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
-        for (int j = 0; j < gridSizeY; j++)
+        for (int i = 0; i < gridSizeX; i++)
         {
-            for (int i = 0; i < gridSizeX; i++)
+            for (int j = 0; j < gridSizeY; j++)
             {
                 Vector3 worldPoint = bottomLeft + Vector3.right * (i * nodeDiameter + nodeRadius) + Vector3.forward * (j * nodeDiameter + nodeRadius);
                 bool wall = Physics.CheckSphere(worldPoint, nodeRadius, wallMask);
-                grid[j, i] = new Node(wall, worldPoint, i, j);
+                grid[i, j] = new Node(wall, worldPoint, i, j);
             }
         }
     }
 
     public Node NodeFromWorldPoint(Vector3 worldPos)
     {
-        float xPoint = Mathf.Clamp01((worldPos.x + gridWorldSize.x) / gridWorldSize.x);
-        float yPoint = Mathf.Clamp01((worldPos.y + gridWorldSize.y) / gridWorldSize.y);
+        float xPoint = Mathf.Clamp01((worldPos.x + gridWorldSize.x / 2) / gridWorldSize.x);
+        float yPoint = Mathf.Clamp01((worldPos.y + gridWorldSize.y / 2) / gridWorldSize.y);
 
         int x = Mathf.RoundToInt((gridSizeX - 1) * xPoint);
         int y = Mathf.RoundToInt((gridSizeY - 1) * yPoint);
@@ -65,10 +65,8 @@ public class AStarGrid : MonoBehaviour
                         continue;
                     if (currentNode.gridX + x >= 0 && currentNode.gridX + x < gridSizeX)
                     {
-                        print((currentNode.gridX + x) + " " + gridSizeX);
                         if (currentNode.gridY + y >= 0 && currentNode.gridY + y < gridSizeY)
                         {
-                            print(x + " " + y);
                             neighbours.Add(grid[currentNode.gridX + x, currentNode.gridY + y]);
                         }
                     }
