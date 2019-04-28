@@ -50,11 +50,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Cube|Dash
-      takeName: Cube|Dash
+      name: Armature|Start_Run (1)
+      takeName: Armature|Start_Run
       internalID: 4354154027361827896
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
