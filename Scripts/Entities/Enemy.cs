@@ -14,6 +14,13 @@ public class Enemy : Entity
         ai = this.GetComponent<EntityAI>();
         if (ai == null)
             Debug.LogError("No EntityAI component attached to " + gameObject.name);
+        target = FindObjectOfType<Player>();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        UpdateAI();
     }
 
     private void UpdateAI()
