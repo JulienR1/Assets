@@ -44,6 +44,8 @@ public class Enemy : Entity
             ai.FindPath();
             this.moveDirection = ai.FollowPath();
         }
+
+        print(this.attackState);
     }
 
     protected override void LookInFront()
@@ -59,10 +61,5 @@ public class Enemy : Entity
                     break;
             }
         }
-    }
-
-    private void LookAtTarget()
-    {
-        transform.LookAt(ai.GetNextNode().position);
-    }
+    }  
 }

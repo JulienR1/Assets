@@ -10,7 +10,7 @@ public abstract class EntityAI : MonoBehaviour
     protected Vector3 targetPos;
     protected Vector3 dodgeDirection;
 
-    protected EntityStats stats;
+    protected EnemyStats stats;
     protected Enums.AttackState previousState;
     protected List<Enums.AttackState> priorities = new List<Enums.AttackState>();
 
@@ -24,7 +24,7 @@ public abstract class EntityAI : MonoBehaviour
     public void SetInitialValues(Entity target, EntityStats stats)
     {
         this.target = target;
-        this.stats = stats;
+        this.stats = (EnemyStats)stats;
     }
 
     public void SetPreviousAttackState(Enums.AttackState previousState)
@@ -67,4 +67,10 @@ public abstract class EntityAI : MonoBehaviour
         return dodgeDirection;
     }
 
+    protected void LookAtTarget()
+    {
+        Vector3 pos = GetNextNode().position;
+        pos.y = transform.position.y;
+        transform.LookAt(pos);
+    }
 }

@@ -70,6 +70,7 @@ public class MeleeAI : EntityAI
     public override void Attack()
     {
         this.targetPos = this.transform.position;
+        this.LookAtTarget();
     }
 
     public override void Flee()

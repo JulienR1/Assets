@@ -14,9 +14,4 @@ public class EntityStats : ScriptableObject
     public float dashDistance;
     public float dashTime;
     public float dashCooldown;
-
-    public float fleeRangeMultiplier;
-
-    public float centerDodgeAngle = 90;
-    public float offsetDodgeAngle = 20;
 }

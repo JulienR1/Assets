@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df19199bc35c79444abea97e6538c6e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 7f12dc5770a3930449c1abbe7732381a, type: 2}
+  stats: {fileID: 11400000, guid: 117cf5fe117d6dd42b91266fb4a17709, type: 2}
   weapons:
   - {fileID: 7607541214826965065, guid: b7d9655b975047c43bb4e0c9c8eb7677, type: 3}
 --- !u!114 &523235233
