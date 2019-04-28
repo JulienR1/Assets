@@ -19,6 +19,10 @@ public class Enemy : Entity
 
     protected override void Update()
     {
+        if (this.attackState == Enums.AttackState.DODGE)
+            if (!controller.GetIsDashing())
+                this.attackState = Enums.AttackState.IDLE;    
+
         UpdateAI();
         base.Update();
     }
