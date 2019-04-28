@@ -12,12 +12,22 @@ ModelImporter:
   - first:
       74: -2437505328985913088
     second: Body|BodyAction.002
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye
+    second: {fileID: 2100000, guid: b6d3df4988de98a44adb08cfef34ec91, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 6a840652cba6721468d300c8ba451568, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -41,11 +51,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Body|BodyAction
-      takeName: Body|BodyAction
+      name: Body|SuperShot
+      takeName: Body|SuperShot
       internalID: 4219266326801906582
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
