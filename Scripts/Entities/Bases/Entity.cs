@@ -9,7 +9,7 @@ public abstract class Entity : MonoBehaviour, IDamageable
     protected EntityController controller;
     private int health;
 
-    protected Weapon[] weapons;
+    protected List<Weapon>[] weapons;
 
     protected Vector3 moveDirection;
     private float dashRefreshTime;
