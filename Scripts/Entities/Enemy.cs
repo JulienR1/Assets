@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : Entity
 {
     private EntityAI ai;
-    public Entity target;
+    private Entity target;
     private Enums.AttackState attackState;
 
     protected override void Start()
@@ -14,6 +14,7 @@ public class Enemy : Entity
         ai = this.GetComponent<EntityAI>();
         if (ai == null)
             Debug.LogError("No EntityAI component attached to " + gameObject.name);
+        target = FindObjectOfType<Player>();
     }
 
     protected override void Update()
@@ -24,7 +25,7 @@ public class Enemy : Entity
 
     private void UpdateAI()
     {
-        FindObjectOfType<Astar>().FindPath(transform.position, target.transform.position);
+
     }
 
     protected override void LookInFront()

@@ -36,7 +36,10 @@ public class Astar : MonoBehaviour
             closedList.Add(currentNode);
 
             if (currentNode == targetNode)
+            {
                 GetFinalPath(startNode, targetNode);
+                return;
+            }
 
             foreach(Node neighbour in grid.GetNeighbours(currentNode))
             {
@@ -69,14 +72,16 @@ public class Astar : MonoBehaviour
 
         path.Reverse();
         grid.path = path;
-        print(path.Count);
     }
 
     private int getManhattanDistance(Node a, Node b)
     {
         int ix = Mathf.Abs(a.gridX - b.gridX);
         int iy = Mathf.Abs(a.gridY - b.gridY);
-        return ix + iy;
+
+        if (ix > iy)
+            return 14 * iy + 10 * (ix - iy);
+        return 14 * ix + 10 * (iy - ix);
     }
 
 }
