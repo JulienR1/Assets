@@ -3,7 +3,17 @@ guid: f4a645cd2bfbe624fbda2b807881f957
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HandCurves
+    second: {fileID: 2100000, guid: 65ce18ba8ba952f4c9eb4e61d4c180c8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 6a840652cba6721468d300c8ba451568, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
