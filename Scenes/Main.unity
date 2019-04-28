@@ -426,6 +426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 7f12dc5770a3930449c1abbe7732381a, type: 2}
+  weapons:
+  - {fileID: 7607541214826965065, guid: b7d9655b975047c43bb4e0c9c8eb7677, type: 3}
 --- !u!114 &523235233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1102,11 +1104,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5119104893284937823, guid: 3aaf67f10137ede4cbbdc5fe4bf22049,
-        type: 3}
-      propertyPath: lookMask.m_Bits
-      value: 768
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3aaf67f10137ede4cbbdc5fe4bf22049, type: 3}

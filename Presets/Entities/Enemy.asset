@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Enemy
   m_EditorClassIdentifier: 
   maxHealth: 50
+  healthPercentToAttack: 0.2
   moveSpeed: 6
   acceleration: 0.1
   dashDistance: 3
   dashTime: 0.15
   dashCooldown: 3
+  fleeRangeMultiplier: 0
+  centerDodgeAngle: 90
+  offsetDodgeAngle: 20
