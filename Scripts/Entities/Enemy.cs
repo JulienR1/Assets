@@ -14,23 +14,32 @@ public class Enemy : Entity
         if (ai == null)
             Debug.LogError("No EntityAI component attached to " + gameObject.name);
         target = FindObjectOfType<Player>();
-        ai.SetTarget(target);
+        ai.SetInitialValues(target, stats);
     }
 
     protected override void Update()
     {
-        base.Update();
         UpdateAI();
+        base.Update();
     }
 
     private void UpdateAI()
     {
         ai.SetPreviousAttackState(this.attackState);
-        ai.SetAttackPriority(stats, this.GetHealth(), this.weapons[0]);
+        ai.SetAttackPriority(this.GetHealth(), this.weapons[0]);
         this.attackState = ai.ProcessPriorities(this.cooldowns);
         ai.FindDisplacementTarget(this.attackState);
-        ai.FindPath();
-        controller.Move(ai.FollowPath(stats.moveSpeed));
+
+        if (this.attackState == Enums.AttackState.DODGE)
+        {
+            this.moveDirection = ai.GetDodgeDirection();
+            Dash();
+        }
+        else
+        {
+            ai.FindPath();
+            this.moveDirection = ai.FollowPath();
+        }
     }
 
     protected override void LookInFront()

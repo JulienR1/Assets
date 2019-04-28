@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class RangeAI : EntityAI
 {
-    public override List<Enums.AttackState> SetAttackPriority(EntityStats stats, int health, Weapon currentWeapon)
+    public override void SetAttackPriority(int health, Weapon currentWeapon)
     {
-        List<Enums.AttackState> priority = new List<Enums.AttackState>();
-        return priority;
+        priorities.Add(Enums.AttackState.IDLE);
     }
 
     public override Enums.AttackState ProcessPriorities(Cooldowns cooldowns)
@@ -20,17 +19,17 @@ public class RangeAI : EntityAI
         
     }
 
-    public override void Attack(Entity target)
+    public override void Attack()
     {
 
     }
 
-    public override void Flee(Entity target)
+    public override void Flee()
     {
 
     }
 
-    public override void Dodge(Entity target)
+    public override void Dodge()
     {
 
     }

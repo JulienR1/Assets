@@ -8,20 +8,23 @@ public abstract class EntityAI : MonoBehaviour
     protected Entity target;
     protected List<Node> path;
     protected Vector3 targetPos;
+    protected Vector3 dodgeDirection;
 
+    protected EntityStats stats;
     protected Enums.AttackState previousState;
-    protected List<Enums.AttackState> priorities;
+    protected List<Enums.AttackState> priorities = new List<Enums.AttackState>();
 
-    public abstract List<Enums.AttackState> SetAttackPriority(EntityStats stats, int health, Weapon currentWeapon);
+    public abstract void SetAttackPriority(int health, Weapon currentWeapon);
     public abstract Enums.AttackState ProcessPriorities(Cooldowns cooldowns);
     public abstract void FindDisplacementTarget(Enums.AttackState attackState);
-    public abstract void Attack(Entity target);
-    public abstract void Flee(Entity target);
-    public abstract void Dodge(Entity target);
+    public abstract void Attack();
+    public abstract void Flee();
+    public abstract void Dodge();
 
-    public void SetTarget(Entity target)
+    public void SetInitialValues(Entity target, EntityStats stats)
     {
         this.target = target;
+        this.stats = stats;
     }
 
     public void SetPreviousAttackState(Enums.AttackState previousState)
@@ -35,7 +38,7 @@ public abstract class EntityAI : MonoBehaviour
         return path != null;
     }
 
-    public Vector3 FollowPath(float moveSpeed)
+    public Vector3 FollowPath()
     {
         if (path == null)
             return Vector3.zero;
@@ -46,7 +49,7 @@ public abstract class EntityAI : MonoBehaviour
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        return moveDirection * moveSpeed;
+        return moveDirection;
     }
 
     public bool IsInRange(Entity target, Weapon weapon)
@@ -57,6 +60,11 @@ public abstract class EntityAI : MonoBehaviour
     public Node GetNextNode()
     {
         return path[0];
+    }
+
+    public Vector3 GetDodgeDirection()
+    {
+        return dodgeDirection;
     }
 
 }

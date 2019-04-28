@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class MeleeAI : EntityAI
 {
-    public override List<Enums.AttackState> SetAttackPriority(EntityStats stats, int health, Weapon currentWeapon)
+    public override void SetAttackPriority(int health, Weapon currentWeapon)
     {
-        List<Enums.AttackState> priority = new List<Enums.AttackState>();
+        priorities.Clear();
         if (previousState == Enums.AttackState.CHASE || previousState == Enums.AttackState.IDLE)
         {
             if (health / stats.maxHealth < stats.healthPercentToAttack)
-                priority.Add(Enums.AttackState.FLEE);
+                priorities.Add(Enums.AttackState.FLEE);
             if (target.GetAttackState() == Enums.AttackState.ATTACK)
-                priority.Add(Enums.AttackState.DODGE);
+                priorities.Add(Enums.AttackState.DODGE);
             if (IsInRange(target, currentWeapon))
-                priority.Add(Enums.AttackState.ATTACK);
+                priorities.Add(Enums.AttackState.ATTACK);
         }
-        priority.Add(Enums.AttackState.CHASE);
-        return priority;
+        priorities.Add(Enums.AttackState.CHASE);
     }
 
     public override Enums.AttackState ProcessPriorities(Cooldowns cooldowns)
     {
         Debug.LogWarning("RESET ATTACK STATE");
-        foreach(Enums.AttackState state in this.priorities)
+        foreach (Enums.AttackState state in this.priorities)
         {
             switch (state)
             {
@@ -40,7 +39,7 @@ public class MeleeAI : EntityAI
                         return state;
                     break;
                 case Enums.AttackState.CHASE:
-                    return state;                    
+                    return state;
             }
         }
         return Enums.AttackState.IDLE;
@@ -48,23 +47,45 @@ public class MeleeAI : EntityAI
 
     public override void FindDisplacementTarget(Enums.AttackState attackState)
     {
-        if (attackState == Enums.AttackState.CHASE)
-            this.targetPos = target.transform.position;
+        switch (attackState)
+        {
+            case Enums.AttackState.FLEE:
+                Flee();
+                break;
+            case Enums.AttackState.DODGE:
+                Dodge();
+                break;
+            case Enums.AttackState.ATTACK:
+                Attack();
+                break;
+            case Enums.AttackState.CHASE:
+                this.targetPos = this.target.transform.position;
+                break;
+            case Enums.AttackState.IDLE:
+                this.targetPos = this.transform.position;
+                break;
+        }
     }
 
-    public override void Attack(Entity target)
+    public override void Attack()
     {
-        
+        this.targetPos = this.transform.position;
     }
 
-    public override void Flee(Entity target)
+    public override void Flee()
     {
-        
+
     }
 
-    public override void Dodge(Entity target)
+    public override void Dodge()
     {
-        
+        Vector3 targetDirection = (this.targetPos - this.transform.position).normalized;
+        float offsetAngle = Random.Range(-this.stats.offsetDodgeAngle, this.stats.offsetDodgeAngle);
+        float dodgeAngle = (this.stats.centerDodgeAngle + offsetAngle) * Mathf.Deg2Rad;
+
+        float dodgeX = targetDirection.x * Mathf.Cos(dodgeAngle) - targetDirection.z * Mathf.Sin(dodgeAngle);
+        float dodgeZ = targetDirection.x * Mathf.Sin(dodgeAngle) + targetDirection.z * Mathf.Cos(dodgeAngle);
+        this.dodgeDirection = new Vector3(dodgeX, 0, dodgeZ);
     }
 
 }

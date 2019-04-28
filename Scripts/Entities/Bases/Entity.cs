@@ -10,7 +10,7 @@ public abstract class Entity : MonoBehaviour, IDamageable
     protected Enums.AttackState attackState;
     private int health;
 
-    protected List<Weapon> weapons;
+    public List<Weapon> weapons;
     protected Cooldowns cooldowns;
 
     protected Vector3 moveDirection;
