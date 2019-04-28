@@ -6,25 +6,29 @@ using UnityEngine.UI;
 public class shopManager : MonoBehaviour {
 
     
-    public GameObject player;
+    public Player player;
     public GameObject canvas;
     public GameObject notEnoughMoney;
     
 
     private bool shopEnabled;
+    private float notMoneyCloseTime;
 
-    public GameObject item;
-    public int price;
+    public Weapon item;
+    
+    public float distanceMax;
+    public float notMoneyDisplayTime;
 
     public void Start() {
-
-        
+        notEnoughMoney.SetActive(false);
     }
 
-    public void inContact() {
-        shopEnabled = true;
+    public void inContact(Vector3 position) {
+        if (Vector3.Distance(position, transform.position) <= distanceMax)
+        {
+            shopEnabled = true;
+        }
     }
-
 
     public void Update() {
 
@@ -35,18 +39,23 @@ public class shopManager : MonoBehaviour {
         }
 
         shopEnabled = false;
+
+        if(Time.time > notMoneyCloseTime) {
+            notEnoughMoney.SetActive(false);
+        }
     }
 
     public void sell() {
-        if (player.GetCurrency() >= price) {
+        if (player.GetCurrency() >= item.stats.itemCost) {
 
             Transform itemSpawned = Instantiate(item.transform, player.transform.position, Quaternion.identity);
             itemSpawned.gameObject.SetActive(false);
             itemSpawned.parent = player.transform;
-            player.RemoveCurrency(price);
+            player.RemoveCurrency(item.stats.itemCost);
         }
         else {
             notEnoughMoney.SetActive(true);
+            notMoneyCloseTime = Time.time + notMoneyDisplayTime;
         }
     }
 

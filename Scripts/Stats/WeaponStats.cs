@@ -4,6 +4,8 @@
 [CreateAssetMenu(fileName ="Weapon Stats", menuName = "LD44/Weapon Stats")]
 public class WeaponStats : ScriptableObject
 {
+    public int itemCost;
+
     public int attackDamage;
     public int attackMax;
 
