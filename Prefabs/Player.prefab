@@ -96,7 +96,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   normalFOV: 60
-  dashFOV: 70
+  dashFOV: 65
   accelerationPercent: 0.25
 --- !u!1001 &3716134729884778119
 PrefabInstance:
@@ -118,7 +118,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: f4a645cd2bfbe624fbda2b807881f957,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.558
+      value: 0.447
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: f4a645cd2bfbe624fbda2b807881f957,
         type: 3}
