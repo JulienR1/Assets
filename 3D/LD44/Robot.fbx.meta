@@ -21,10 +21,20 @@ ModelImporter:
   - first:
       74: -221832529884007103
     second: Armature|Start_Run
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Base
+    second: {fileID: 2100000, guid: 6a840652cba6721468d300c8ba451568, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye
+    second: {fileID: 2100000, guid: b6d3df4988de98a44adb08cfef34ec91, type: 2}
   materials:
     importMaterials: 1
-    materialName: 0
+    materialName: 1
     materialSearch: 1
     materialLocation: 1
   animations:
