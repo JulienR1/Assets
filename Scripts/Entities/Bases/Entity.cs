@@ -47,11 +47,15 @@ public abstract class Entity : MonoBehaviour, IDamageable
 
     protected void Attack(IDamageable target, Weapon weapon)
     {
-        weapon.Attack(target);
-        this.cooldowns.attackCooldownTime = Time.time + weapon.stats.attackCooldown;
-        Debug.LogWarning("Animation of attack");
-        // REDO AVEC ANIMATION
-        attackState = Enums.AttackState.IDLE;
+        if (Time.time > cooldowns.attackCooldownTime)
+        {
+            attackState = Enums.AttackState.ATTACK;
+            weapon.Attack(target);
+            this.cooldowns.attackCooldownTime = Time.time + weapon.stats.attackCooldown;
+            Debug.LogWarning("Animation of attack");
+            // REDO AVEC ANIMATION
+        }
+            attackState = Enums.AttackState.IDLE;
     }
 
     public void TakeDamage(int damage)

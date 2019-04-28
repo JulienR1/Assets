@@ -47,7 +47,11 @@ public class Player : Entity
             Dash();
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("pew pew");
+            if (currentEnemy != null)
+            {
+                Debug.Log("Chnage to current weapon");
+                Attack(currentEnemy, weapons[0]);
+            }
         }
     }
 
