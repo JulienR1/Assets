@@ -45,6 +45,10 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
             Dash();
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("pew pew");
+        }
     }
 
     private void SetCusorLock(CursorLockMode lockMode)
