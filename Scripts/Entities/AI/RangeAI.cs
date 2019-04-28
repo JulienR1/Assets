@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class RangeAI : EntityAI
 {
-    public override bool FindPath(Entity target)
+    public override Enums.AttackState SetAttackPriority(EntityStats stats)
     {
-        return false;
+        return Enums.AttackState.IDLE;
     }
 
-    public override bool FollowPath()
+    public override void FindDisplacementTarget(Enums.AttackState attackState, Entity target)
     {
-        return false;
+
     }
 
     public override void Attack(Entity target)

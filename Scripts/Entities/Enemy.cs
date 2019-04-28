@@ -25,7 +25,10 @@ public class Enemy : Entity
 
     private void UpdateAI()
     {
-
+        attackState = ai.SetAttackPriority(stats);
+        ai.FindDisplacementTarget(attackState, target);
+        ai.FindPath();
+        controller.Move(ai.FollowPath(stats.moveSpeed));
     }
 
     protected override void LookInFront()
@@ -45,6 +48,6 @@ public class Enemy : Entity
 
     private void LookAtTarget()
     {
-        transform.LookAt(ai.GetNextPosition());
+        transform.LookAt(ai.GetNextNode().position);
     }
 }

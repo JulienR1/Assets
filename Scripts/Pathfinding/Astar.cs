@@ -12,7 +12,7 @@ public class Astar : MonoBehaviour
         grid = this.GetComponent<AStarGrid>();
     }
 
-    public void FindPath(Vector3 startPos, Vector3 endPos)
+    public List<Node> FindPath(Vector3 startPos, Vector3 endPos)
     {
         Node startNode = grid.NodeFromWorldPoint(startPos);
         Node targetNode = grid.NodeFromWorldPoint(endPos);
@@ -37,8 +37,7 @@ public class Astar : MonoBehaviour
 
             if (currentNode == targetNode)
             {
-                GetFinalPath(startNode, targetNode);
-                return;
+                return GetFinalPath(startNode, targetNode);
             }
 
             foreach(Node neighbour in grid.GetNeighbours(currentNode))
@@ -58,9 +57,10 @@ public class Astar : MonoBehaviour
                 }
             }
         }
+        return null;
     }
 
-    private void GetFinalPath(Node startNode, Node endNode)
+    private List<Node> GetFinalPath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
@@ -71,7 +71,7 @@ public class Astar : MonoBehaviour
         }
 
         path.Reverse();
-        grid.path = path;
+        return path;
     }
 
     private int getManhattanDistance(Node a, Node b)
