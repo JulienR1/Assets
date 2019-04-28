@@ -6,7 +6,6 @@ public class Enemy : Entity
 {
     private EntityAI ai;
     private Entity target;
-    private Enums.AttackState attackState;
 
     protected override void Start()
     {
@@ -15,6 +14,7 @@ public class Enemy : Entity
         if (ai == null)
             Debug.LogError("No EntityAI component attached to " + gameObject.name);
         target = FindObjectOfType<Player>();
+        ai.SetTarget(target);
     }
 
     protected override void Update()
@@ -25,8 +25,10 @@ public class Enemy : Entity
 
     private void UpdateAI()
     {
-        attackState = ai.SetAttackPriority(stats);
-        ai.FindDisplacementTarget(attackState, target);
+        ai.SetPreviousAttackState(this.attackState);
+        ai.SetAttackPriority(stats, this.GetHealth(), this.weapons[0]);
+        this.attackState = ai.ProcessPriorities(this.cooldowns);
+        ai.FindDisplacementTarget(this.attackState);
         ai.FindPath();
         controller.Move(ai.FollowPath(stats.moveSpeed));
     }

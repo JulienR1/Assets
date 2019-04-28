@@ -7,9 +7,11 @@ public abstract class Entity : MonoBehaviour, IDamageable
 {
     public EntityStats stats;
     protected EntityController controller;
+    protected Enums.AttackState attackState;
     private int health;
 
-    protected List<Weapon>[] weapons;
+    protected List<Weapon> weapons;
+    protected Cooldowns cooldowns;
 
     protected Vector3 moveDirection;
     private float dashRefreshTime;
@@ -53,6 +55,16 @@ public abstract class Entity : MonoBehaviour, IDamageable
         this.health -= damage;
         if (this.health <= 0)
             Die();
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public Enums.AttackState GetAttackState()
+    {
+        return attackState;
     }
 
     public void Die()

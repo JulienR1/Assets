@@ -5,14 +5,29 @@ using UnityEngine;
 public abstract class EntityAI : MonoBehaviour
 {
     public Astar pathfinding;
+    protected Entity target;
     protected List<Node> path;
     protected Vector3 targetPos;
 
-    public abstract Enums.AttackState SetAttackPriority(EntityStats stats);
-    public abstract void FindDisplacementTarget(Enums.AttackState attackState, Entity target);
+    protected Enums.AttackState previousState;
+    protected List<Enums.AttackState> priorities;
+
+    public abstract List<Enums.AttackState> SetAttackPriority(EntityStats stats, int health, Weapon currentWeapon);
+    public abstract Enums.AttackState ProcessPriorities(Cooldowns cooldowns);
+    public abstract void FindDisplacementTarget(Enums.AttackState attackState);
     public abstract void Attack(Entity target);
     public abstract void Flee(Entity target);
     public abstract void Dodge(Entity target);
+
+    public void SetTarget(Entity target)
+    {
+        this.target = target;
+    }
+
+    public void SetPreviousAttackState(Enums.AttackState previousState)
+    {
+        this.previousState = previousState;
+    }
 
     public bool FindPath()
     {
