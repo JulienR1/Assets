@@ -60,8 +60,9 @@ public class Player : Entity
         Cursor.lockState = lockMode;
     }
 
-    protected override void LookInFront()
+    protected override Transform LookInFront()
     {
+        currentEnemy = null;
         RaycastHit hit;
         Ray ray = new Ray(myCamera.transform.position, myCamera.transform.forward);
         if(Physics.Raycast(ray,out hit))
@@ -71,12 +72,13 @@ public class Player : Entity
                 case "Shop":
                     shop = hit.transform.GetComponent<shopManager>();
                     shop.inContact(transform.position);
-                    break;
+                    return shop.transform;
                 case "Enemy":
                     currentEnemy = hit.transform.GetComponent<Enemy>();
-                    break;
+                    return currentEnemy.transform;
             }
         }
+        return null;
     }
 
     private void LookAtCursor()

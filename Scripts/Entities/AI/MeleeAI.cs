@@ -9,11 +9,11 @@ public class MeleeAI : EntityAI
         priorities.Clear();
         if (previousState == Enums.AttackState.CHASE || previousState == Enums.AttackState.IDLE)
         {
-            if (health / stats.maxHealth < stats.healthPercentToAttack)
+            if ((float)health / stats.maxHealth < stats.healthPercentToAttack)
                 priorities.Add(Enums.AttackState.FLEE);
             if (target.GetAttackState() == Enums.AttackState.ATTACK)
                 priorities.Add(Enums.AttackState.DODGE);
-            if (IsInRange(target, currentWeapon))
+            if (Entity.IsInRange(transform.position, target, currentWeapon))
                 priorities.Add(Enums.AttackState.ATTACK);
             priorities.Add(Enums.AttackState.CHASE);
         }
@@ -43,7 +43,7 @@ public class MeleeAI : EntityAI
                         return state;
                     break;
                 case Enums.AttackState.CHASE:
-                    if (!IsInRange(target, weapon))
+                    if (!Entity.IsInRange(transform.position, target, weapon))
                         return state;
                     break;
             }
@@ -79,7 +79,7 @@ public class MeleeAI : EntityAI
 
     public override void Dodge()
     {
-        Vector3 targetDirection = (this.targetPos - this.transform.position).normalized;
+        Vector3 targetDirection = (this.target.transform.position - this.transform.position).normalized;
         float offsetAngle = Random.Range(-this.stats.offsetDodgeAngle, this.stats.offsetDodgeAngle);
         float dodgeAngle = (this.stats.centerDodgeAngle + offsetAngle) * Mathf.Deg2Rad;
 

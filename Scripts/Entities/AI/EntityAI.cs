@@ -44,22 +44,18 @@ public abstract class EntityAI : MonoBehaviour
         if (path.Count == 0)
             return Vector3.zero;
 
-        Vector3 moveDirection = path[0].position - transform.position;
+        Vector3 moveDirection = GetNextNode().position - transform.position;
         moveDirection.Normalize();
         moveDirection.y = 0;
 
         return moveDirection;
     }
 
-    public bool IsInRange(Entity target, Weapon weapon)
-    {
-        return (Vector3.Distance(target.transform.position, transform.position) <= weapon.stats.attackRange);
-    }
-
     public Node GetNextNode()
     {
-        if (path.Count > 0)
-            return path[0];
+        if (path != null)
+            if (path.Count > 0)
+                return path[0];
         return null;
     }
 

@@ -54,9 +54,10 @@ public class Enemy : Entity
             ai.FindPath();
             this.moveDirection = ai.FollowPath();
         }
+        print(this.attackState);
     }
 
-    protected override void LookInFront()
+    protected override Transform LookInFront()
     {
         if (target == null) {
         RaycastHit hit;
@@ -67,10 +68,11 @@ public class Enemy : Entity
                 {
                     case "Player":
                         target = hit.transform.GetComponent<Player>();
-                        break;
+                        return target.transform;
                 }
             }
         }
+        return null;
     }
 
     protected void LookAtTarget()
@@ -80,8 +82,8 @@ public class Enemy : Entity
             pos = ai.GetNextNode().position;
         else
             pos = target.transform.position;
-        pos.y = transform.position.y;
         transform.LookAt(pos);
-
+        Vector3 rotation = new Vector3(0, transform.eulerAngles.y, 0);
+        transform.eulerAngles = rotation;
     }
 }
