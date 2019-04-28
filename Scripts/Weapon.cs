@@ -10,5 +10,6 @@ public class Weapon : MonoBehaviour
     {
         print("REDO logique");
         target.TakeDamage(stats.attackDamage);
+        Debug.Log(((Entity)target).gameObject.name + " just took " + stats.attackDamage + " damage.");
     }
 }

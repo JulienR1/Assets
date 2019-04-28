@@ -15,11 +15,15 @@ public class MeleeAI : EntityAI
                 priorities.Add(Enums.AttackState.DODGE);
             if (IsInRange(target, currentWeapon))
                 priorities.Add(Enums.AttackState.ATTACK);
+            priorities.Add(Enums.AttackState.CHASE);
         }
-        priorities.Add(Enums.AttackState.CHASE);
+        else
+        {
+            priorities.Add(previousState);
+        }
     }
 
-    public override Enums.AttackState ProcessPriorities(Cooldowns cooldowns)
+    public override Enums.AttackState ProcessPriorities(Cooldowns cooldowns, Weapon weapon)
     {
         Debug.LogWarning("RESET ATTACK STATE");
         foreach (Enums.AttackState state in this.priorities)
@@ -27,19 +31,21 @@ public class MeleeAI : EntityAI
             switch (state)
             {
                 case Enums.AttackState.FLEE:
-                    if (state == previousState || previousState != Enums.AttackState.ATTACK && previousState != Enums.AttackState.DODGE)
+                    if (previousState != Enums.AttackState.ATTACK && previousState != Enums.AttackState.DODGE)
                         return state;
                     break;
                 case Enums.AttackState.DODGE:
-                    if (state == previousState || previousState != Enums.AttackState.ATTACK && Time.time >= cooldowns.dodgeCooldownTime)
+                    if (previousState != Enums.AttackState.ATTACK && Time.time >= cooldowns.dodgeCooldownTime)
                         return state;
                     break;
                 case Enums.AttackState.ATTACK:
-                    if (state == previousState || Time.time >= cooldowns.attackCooldownTime)
+                    if (Time.time >= cooldowns.attackCooldownTime)
                         return state;
                     break;
                 case Enums.AttackState.CHASE:
-                    return state;
+                    if (!IsInRange(target, weapon))
+                        return state;
+                    break;
             }
         }
         return Enums.AttackState.IDLE;
@@ -56,7 +62,6 @@ public class MeleeAI : EntityAI
                 Dodge();
                 break;
             case Enums.AttackState.ATTACK:
-                Attack();
                 break;
             case Enums.AttackState.CHASE:
                 this.targetPos = this.target.transform.position;
@@ -65,12 +70,6 @@ public class MeleeAI : EntityAI
                 this.targetPos = this.transform.position;
                 break;
         }
-    }
-
-    public override void Attack()
-    {
-        this.targetPos = this.transform.position;
-        this.LookAtTarget();
     }
 
     public override void Flee()

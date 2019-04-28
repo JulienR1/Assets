@@ -24,6 +24,7 @@ public class Enemy : Entity
                 this.attackState = Enums.AttackState.IDLE;    
 
         UpdateAI();
+        LookAtTarget();
         base.Update();
     }
 
@@ -31,7 +32,7 @@ public class Enemy : Entity
     {
         ai.SetPreviousAttackState(this.attackState);
         ai.SetAttackPriority(this.GetHealth(), this.weapons[0]);
-        this.attackState = ai.ProcessPriorities(this.cooldowns);
+        this.attackState = ai.ProcessPriorities(this.cooldowns, this.weapons[0]);
         ai.FindDisplacementTarget(this.attackState);
 
         if (this.attackState == Enums.AttackState.DODGE)
@@ -39,27 +40,48 @@ public class Enemy : Entity
             this.moveDirection = ai.GetDodgeDirection();
             Dash();
         }
+        else if (attackState == Enums.AttackState.ATTACK || attackState == Enums.AttackState.IDLE)
+        {
+            if (attackState == Enums.AttackState.ATTACK)
+            {
+                Debug.LogWarning("Change to equipped weapon");
+                this.Attack(target, weapons[0]);
+            }
+            this.moveDirection = Vector3.zero;
+        }
         else
         {
             ai.FindPath();
             this.moveDirection = ai.FollowPath();
         }
-
-        print(this.attackState);
     }
 
     protected override void LookInFront()
     {
+        if (target == null) {
         RaycastHit hit;
         Ray ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out hit))
-        {
-            switch (hit.transform.gameObject.tag)
+            if (Physics.Raycast(ray, out hit))
             {
-                case "Player":
-                    target = hit.transform.GetComponent<Player>();
-                    break;
+                switch (hit.transform.gameObject.tag)
+                {
+                    case "Player":
+                        target = hit.transform.GetComponent<Player>();
+                        break;
+                }
             }
         }
-    }  
+    }
+
+    protected void LookAtTarget()
+    {
+        Vector3 pos;
+        if (ai.GetNextNode() != null)
+            pos = ai.GetNextNode().position;
+        else
+            pos = target.transform.position;
+        pos.y = transform.position.y;
+        transform.LookAt(pos);
+
+    }
 }

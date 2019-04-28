@@ -15,9 +15,8 @@ public abstract class EntityAI : MonoBehaviour
     protected List<Enums.AttackState> priorities = new List<Enums.AttackState>();
 
     public abstract void SetAttackPriority(int health, Weapon currentWeapon);
-    public abstract Enums.AttackState ProcessPriorities(Cooldowns cooldowns);
+    public abstract Enums.AttackState ProcessPriorities(Cooldowns cooldowns, Weapon weapon);
     public abstract void FindDisplacementTarget(Enums.AttackState attackState);
-    public abstract void Attack();
     public abstract void Flee();
     public abstract void Dodge();
 
@@ -59,18 +58,13 @@ public abstract class EntityAI : MonoBehaviour
 
     public Node GetNextNode()
     {
-        return path[0];
+        if (path.Count > 0)
+            return path[0];
+        return null;
     }
 
     public Vector3 GetDodgeDirection()
     {
         return dodgeDirection;
-    }
-
-    protected void LookAtTarget()
-    {
-        Vector3 pos = GetNextNode().position;
-        pos.y = transform.position.y;
-        transform.LookAt(pos);
     }
 }

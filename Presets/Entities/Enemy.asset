@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   healthPercentToAttack: 0.15
-  moveSpeed: 4
+  moveSpeed: 6
   acceleration: 0
   dashDistance: 3
   dashTime: 0.15

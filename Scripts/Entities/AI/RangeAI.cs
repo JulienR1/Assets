@@ -9,7 +9,7 @@ public class RangeAI : EntityAI
         priorities.Add(Enums.AttackState.IDLE);
     }
 
-    public override Enums.AttackState ProcessPriorities(Cooldowns cooldowns)
+    public override Enums.AttackState ProcessPriorities(Cooldowns cooldowns, Weapon weapon)
     {
         return Enums.AttackState.IDLE;
     }
@@ -17,11 +17,6 @@ public class RangeAI : EntityAI
     public override void FindDisplacementTarget(Enums.AttackState attackState)
     {
         
-    }
-
-    public override void Attack()
-    {
-
     }
 
     public override void Flee()
