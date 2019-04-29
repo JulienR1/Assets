@@ -1,4 +1,5 @@
 ﻿ using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
@@ -19,7 +20,7 @@ public class Player : Entity
 
     private float xAxisClamp;
 
-    private shopManager shop;
+    private ShopManager shop;
     private int currency;
 
     private Enemy currentEnemy;
@@ -61,7 +62,7 @@ public class Player : Entity
             switch (hit.transform.gameObject.tag)
             {
                 case "Shop":
-                    shop = hit.transform.GetComponent<shopManager>();
+                    shop = hit.transform.GetComponent<ShopManager>();
                     shop.inContact(transform.position);
                     break;
                 case "Enemy":
@@ -144,6 +145,30 @@ public class Player : Entity
             return false;
         currency -= amount;
         return true;
+    }
+
+    public bool verifDoublons(Weapon item) {
+
+        for(int i = 0; i < this.weapons.Count; i++) {
+            if(item == this.weapons[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void AddWeapon(Weapon item) {
+
+        this.weapons.Add(item);
+
+    }
+
+    public override void Die()
+    {
+        FamePoints.MortFame();
+        SceneManager.LoadScene("MenuManager", LoadSceneMode.Additive);
+        base.Die();
+       
     }
 
 }

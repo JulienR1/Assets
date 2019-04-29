@@ -12,4 +12,6 @@ public class EntityStats : ScriptableObject
     public float dashDistance;
     public float dashTime;
     public float dashCooldown;
+
+    public int deathFame;
 }
