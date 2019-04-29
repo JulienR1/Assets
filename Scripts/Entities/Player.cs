@@ -5,8 +5,6 @@ public class Player : Entity
     public Camera myCamera;
     public float mouseSensitivity;
 
-    public LayerMask lookMask;
-
     [Header("Animations")]
     public float normalFOV = 60;
     public float dashFOV = 70;

@@ -90,14 +90,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 573f36c3e036a164da6ac09fe621dac9, type: 2}
+  weapons:
+  - {fileID: 7607541214826965065, guid: b7d9655b975047c43bb4e0c9c8eb7677, type: 3}
   myCamera: {fileID: 5134789344552066069}
   mouseSensitivity: 150
-    serializedVersion: 2
-  lookMask:
-    m_Bits: 0
   normalFOV: 60
-  dashFOV: 65
-  accelerationPercent: 0.25
+  dashFOV: 70
+  accelerationPercent: 0.05
 --- !u!1001 &3716134729884778119
 PrefabInstance:
   m_ObjectHideFlags: 0
