@@ -5,20 +5,43 @@ using UnityEngine;
 [RequireComponent(typeof(EntityController))]
 public abstract class Entity : MonoBehaviour, IDamageable
 {
+    public delegate void EnemyDeathAction();
+    public static event EnemyDeathAction OnEnemyDeath;
+
     public EntityStats stats;
     protected EntityController controller;
     protected Enums.AttackState attackState;
     private AttackProcess currentAttack;
     private int health;
 
-    public List<Weapon> weapons;
     protected Cooldowns cooldowns;
+    protected Weapon currentWeapon;
+    protected int weaponNumber = 0;
+
+    protected List<Weapon> weapons;
     protected Vector3 moveDirection;
 
     protected virtual void Start()
     {
+        currentWeapon = weapons[0];
+
         controller = this.GetComponent<EntityController>();
         this.health = stats.maxHealth;
+    }
+
+    public void SelectWeapon() {
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            weaponNumber++;
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            weaponNumber--;
+        }
+
+        currentWeapon = weapons[weaponNumber % weapons.Count];
+
     }
 
     protected virtual void Update()
@@ -87,9 +110,15 @@ public abstract class Entity : MonoBehaviour, IDamageable
         return attackState;
     }
 
-    public void Die()
+    public virtual void Die()
     {
         print("Killed " + gameObject.name);
+        FamePoints.KillFame(stats.deathFame);
+        if(OnEnemyDeath != null)
+        {
+            OnEnemyDeath();
+        }
+
         Destroy(this.gameObject);
     }
 
