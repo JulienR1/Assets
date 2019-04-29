@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AStarGrid : MonoBehaviour
 {
-    public bool renderGizmos = false;
-
     public LayerMask wallMask;
     public Vector2 gridWorldSize;
     public float nodeRadius;
@@ -13,7 +11,6 @@ public class AStarGrid : MonoBehaviour
 
     private Transform startPos;
     private Node[,] grid;
-    public List<Node> path;
 
     private float nodeDiameter;
     private int gridSizeX, gridSizeY;
@@ -33,7 +30,7 @@ public class AStarGrid : MonoBehaviour
         for (int i = 0; i < gridSizeX; i++)
         {
             for (int j = 0; j < gridSizeY; j++)
-        {            
+            {
                 Vector3 worldPoint = bottomLeft + Vector3.right * (i * nodeDiameter + nodeRadius) + Vector3.forward * (j * nodeDiameter + nodeRadius);
                 bool wall = !Physics.CheckSphere(worldPoint, nodeRadius, wallMask);
                 grid[i, j] = new Node(wall, worldPoint, i, j);
@@ -59,17 +56,14 @@ public class AStarGrid : MonoBehaviour
         {
             for (int y = -1; y <= 1; y++)
             {
-               /* if (x == 0 || y == 0)
-                {*/
-                    if (x == 0 && y == 0)
-                        continue;
+                if (x == 0 && y == 0)
+                    continue;
 
-                    int checkX = currentNode.gridX + x;
-                    int checkY = currentNode.gridY + y;
+                int checkX = currentNode.gridX + x;
+                int checkY = currentNode.gridY + y;
 
-                    if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
-                        neighbours.Add(grid[checkX, checkY]);
-            //    }
+                if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+                    neighbours.Add(grid[checkX, checkY]);
             }
         }
         return neighbours;
@@ -77,27 +71,12 @@ public class AStarGrid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (renderGizmos) { 
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-            if (grid != null)
+        if (grid != null)
+        {
+            foreach(Node n in grid)
             {
-                foreach (Node n in grid)
-                {
-                    if (n.isWall)
-                        Gizmos.color = Color.green;
-                    else
-                        Gizmos.color = Color.red;
-
-                    if (path != null)
-                    {
-                        if (path.Contains(n))
-                        {
-                            Gizmos.color = Color.blue;
-                        }
-                    }
-
-                    Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - distance));
-                }
+                Gizmos.color = (n.isWall) ? Color.white : Color.blue;
+                Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter-0.1f));
             }
         }
     }

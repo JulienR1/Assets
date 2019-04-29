@@ -7,12 +7,13 @@ public abstract class Entity : MonoBehaviour, IDamageable
 {
     public EntityStats stats;
     protected EntityController controller;
+    protected Enums.AttackState attackState;
+    private AttackProcess currentAttack;
     private int health;
 
-    protected List<Weapon>[] weapons;
-
+    public List<Weapon> weapons;
+    protected Cooldowns cooldowns;
     protected Vector3 moveDirection;
-    private float dashRefreshTime;
 
     protected virtual void Start()
     {
@@ -34,18 +35,39 @@ public abstract class Entity : MonoBehaviour, IDamageable
 
     protected void Dash()
     {
-        if (Time.time > dashRefreshTime)
+        if (Time.time > cooldowns.dodgeCooldownTime)
         {
             if (moveDirection == Vector3.zero)
                 moveDirection = Vector3.forward;
             controller.Dash(moveDirection * stats.dashDistance / stats.dashTime, stats.dashTime);
-            dashRefreshTime = Time.time + stats.dashTime + stats.dashCooldown;
+            cooldowns.dodgeCooldownTime = Time.time + stats.dashTime + stats.dashCooldown;
         }
     }
 
     protected void Attack(IDamageable target, Weapon weapon)
     {
-        weapon.Attack(target);
+        if (Time.time > cooldowns.attackCooldownTime && IsInRange(transform.position, (Entity)target, weapon))
+        {
+            attackState = Enums.AttackState.ATTACK;
+            currentAttack = new AttackProcess(target, weapon);
+            this.cooldowns.attackCooldownTime = Time.time + weapon.stats.attackCooldown + weapon.stats.attackTime;
+            Debug.LogWarning("Animation of attack");
+            // REDO AVEC ANIMATION
+            Invoke("OnAttackAnimationEnd", weapon.stats.attackTime);
+        }
+        else
+        {
+            attackState = Enums.AttackState.IDLE;
+        }
+    }
+
+    private void OnAttackAnimationEnd()
+    {
+        Transform inFrontTransform = LookInFront();
+        if (inFrontTransform != null)
+            if (inFrontTransform.tag == "Enemy" || inFrontTransform.tag == "Player")
+                currentAttack.weapon.Attack(currentAttack.target);
+        attackState = Enums.AttackState.IDLE;
     }
 
     public void TakeDamage(int damage)
@@ -53,6 +75,16 @@ public abstract class Entity : MonoBehaviour, IDamageable
         this.health -= damage;
         if (this.health <= 0)
             Die();
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public Enums.AttackState GetAttackState()
+    {
+        return attackState;
     }
 
     public void Die()
@@ -66,6 +98,23 @@ public abstract class Entity : MonoBehaviour, IDamageable
 
     }
 
-    protected abstract void LookInFront();
+    protected abstract Transform LookInFront();
+
+    public static bool IsInRange(Vector3 selfPos, Entity target, Weapon weapon)
+    {
+        return (Vector3.Distance(target.transform.position, selfPos) <= weapon.stats.attackRange);
+    }
+
+    private struct AttackProcess
+    {
+        public IDamageable target;
+        public Weapon weapon;
+
+        public AttackProcess(IDamageable target, Weapon weapon)
+        {
+            this.target = target;
+            this.weapon = weapon;
+        }
+    }
 
 }

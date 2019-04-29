@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class RangeAI : EntityAI
 {
-    public override bool FindPath(Entity target)
+    public override void SetAttackPriority(int health, Weapon currentWeapon)
     {
-        return false;
+        priorities.Add(Enums.AttackState.IDLE);
     }
 
-    public override bool FollowPath()
+    public override Enums.AttackState ProcessPriorities(Cooldowns cooldowns, Weapon weapon)
     {
-        return false;
+        return Enums.AttackState.IDLE;
     }
 
-    public override void Attack(Entity target)
+    public override void FindDisplacementTarget(Enums.AttackState attackState)
+    {
+        
+    }
+
+    public override void Flee()
     {
 
     }
 
-    public override void Flee(Entity target)
-    {
-
-    }
-
-    public override void Dodge(Entity target)
+    public override void Dodge()
     {
 
     }

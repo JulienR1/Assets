@@ -92,8 +92,8 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 573f36c3e036a164da6ac09fe621dac9, type: 2}
   myCamera: {fileID: 5134789344552066069}
   mouseSensitivity: 150
-  lookMask:
     serializedVersion: 2
+  lookMask:
     m_Bits: 0
   normalFOV: 60
   dashFOV: 65
