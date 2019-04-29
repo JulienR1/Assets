@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class EntityAI : MonoBehaviour
 {
+    private const float PATH_REFRESH_RATE = 0.25f;
+    private float nextPathRefreshTime;
+
     public Astar pathfinding;
     protected Entity target;
     protected List<Node> path;
@@ -33,7 +36,11 @@ public abstract class EntityAI : MonoBehaviour
 
     public bool FindPath()
     {
-        path = pathfinding.FindPath(transform.position, targetPos);
+        if (Time.time > nextPathRefreshTime)
+        {
+            path = pathfinding.FindPath(transform.position, targetPos);
+            nextPathRefreshTime = Time.time + PATH_REFRESH_RATE;
+        }
         return path != null;
     }
 
@@ -62,5 +69,17 @@ public abstract class EntityAI : MonoBehaviour
     public Vector3 GetDodgeDirection()
     {
         return dodgeDirection;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (path != null && path.Count > 0)
+        {
+            Gizmos.color = Color.red;
+            foreach (Node n in path)
+            {
+                Gizmos.DrawCube(n.position, Vector3.one);
+            }
+        }
     }
 }

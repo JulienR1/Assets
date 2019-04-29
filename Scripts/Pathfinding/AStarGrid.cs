@@ -68,4 +68,16 @@ public class AStarGrid : MonoBehaviour
         }
         return neighbours;
     }
+
+    private void OnDrawGizmos()
+    {
+        if (grid != null)
+        {
+            foreach(Node n in grid)
+            {
+                Gizmos.color = (n.isWall) ? Color.white : Color.blue;
+                Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter-0.1f));
+            }
+        }
+    }
 }
