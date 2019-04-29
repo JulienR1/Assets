@@ -7,7 +7,7 @@ public abstract class EntityAI : MonoBehaviour
     private const float PATH_REFRESH_RATE = 0.25f;
     private float nextPathRefreshTime;
 
-    public Astar pathfinding;
+    public Pathfinding pathfinding;
     protected Entity target;
     protected List<Node> path;
     protected Vector3 targetPos;
@@ -38,7 +38,8 @@ public abstract class EntityAI : MonoBehaviour
     {
         if (Time.time > nextPathRefreshTime)
         {
-            path = pathfinding.FindPath(transform.position, targetPos);
+            Debug.LogWarning("UPDATE");
+   //         path = pathfinding.FindPath(transform.position, targetPos);
             nextPathRefreshTime = Time.time + PATH_REFRESH_RATE;
         }
         return path != null;
@@ -46,40 +47,12 @@ public abstract class EntityAI : MonoBehaviour
 
     public Vector3 FollowPath()
     {
-        if (path == null)
-            return Vector3.zero;
-        if (path.Count == 0)
-            return Vector3.zero;
-
-        Vector3 moveDirection = GetNextNode().position - transform.position;
-        moveDirection.Normalize();
-        moveDirection.y = 0;
-
-        return moveDirection;
-    }
-
-    public Node GetNextNode()
-    {
-        if (path != null)
-            if (path.Count > 0)
-                return path[0];
-        return null;
+        Debug.LogWarning("UPDATE");
+        return Vector3.zero;
     }
 
     public Vector3 GetDodgeDirection()
     {
         return dodgeDirection;
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (path != null && path.Count > 0)
-        {
-            Gizmos.color = Color.red;
-            foreach (Node n in path)
-            {
-                Gizmos.DrawCube(n.position, Vector3.one);
-            }
-        }
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
+    public Camera mainCamera;
 
     public GameObject mainMenuHolder;
     public GameObject optionsMenuHolder;
@@ -20,27 +21,33 @@ public class MenuManager : MonoBehaviour
     public Toggle fullScreenToggle;
     int activeScreenResIndex;
 
+    public Text[] storyLine;
+    public string[] storyText;
+    public GameObject playButton;
+    public float timeBetweenChar = 0.01f;
 
     public void Start()
     {
-
-        activeScreenResIndex = PlayerPrefs.GetInt("screen res index");
-        bool isFullScreen = (PlayerPrefs.GetInt("fullscreen") == 1) ? true : false;
-        /*
-        volumeSliders[0].value = AudioManager.instance.masterVolumePercent;
-        volumeSliders[1].value = AudioManager.instance.musicVolumePercent;
-        volumeSliders[2].value = AudioManager.instance.sfxVolumePercent;
-        */
-        for (int i = 0; i < resolutionToggles.Length; i++)
+        if (SceneManager.GetActiveScene().name == "MenuManager")
         {
-            resolutionToggles[i].isOn = i == activeScreenResIndex;
-        }
+            activeScreenResIndex = PlayerPrefs.GetInt("screen res index");
+            bool isFullScreen = (PlayerPrefs.GetInt("fullscreen") == 1) ? true : false;
+            /*
+            volumeSliders[0].value = AudioManager.instance.masterVolumePercent;
+            volumeSliders[1].value = AudioManager.instance.musicVolumePercent;
+            volumeSliders[2].value = AudioManager.instance.sfxVolumePercent;
+            */
+            for (int i = 0; i < resolutionToggles.Length; i++)
+            {
+                resolutionToggles[i].isOn = i == activeScreenResIndex;
+            }
 
-        fullScreenToggle.isOn = isFullScreen;
+            fullScreenToggle.isOn = isFullScreen;
 
-        if (FamePoints.mort == true)
-        {
-            DeadMenu();
+            if (FamePoints.mort == true)
+            {
+                DeadMenu();
+            }
         }
     }
 
@@ -54,6 +61,7 @@ public class MenuManager : MonoBehaviour
 
     public void ResetAll()
     {
+        mainCamera.clearFlags = CameraClearFlags.Skybox;
         mainMenuHolder.SetActive(false);
         optionsMenuHolder.SetActive(false);
         creditsHolder.SetActive(false);
@@ -85,7 +93,7 @@ public class MenuManager : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Game");
         FamePoints.mort = false;
     }
 
@@ -110,6 +118,22 @@ public class MenuManager : MonoBehaviour
     {
         ResetAll();
         beforePlayHolder.SetActive(true);
+        StartCoroutine("AnimateBeforePlay");
+    }
+
+    IEnumerator AnimateBeforePlay(){
+        for(int i = 0; i < storyLine.Length; i++){
+            storyLine[i].gameObject.SetActive(true);
+            for(int j = 0; j < storyText[i].Length; j++){
+                storyLine[i].text = storyText[i].Substring(0, j+1);
+                yield return new WaitForSeconds(timeBetweenChar);
+            }
+        }
+        ShowPlayButton();
+    }
+
+    public void ShowPlayButton(){
+        playButton.gameObject.SetActive(true);
     }
 
     public void CreditsMenu()
@@ -121,6 +145,7 @@ public class MenuManager : MonoBehaviour
     public void DeadMenu()
     {
         ResetAll();
+        mainCamera.clearFlags = CameraClearFlags.SolidColor;
         deadMenuHolder.SetActive(true);
     }
 

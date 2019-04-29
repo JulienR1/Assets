@@ -78,9 +78,10 @@ public class Enemy : Entity
     protected void LookAtTarget()
     {
         Vector3 pos;
-        if (ai.GetNextNode() != null)
+        Debug.LogWarning("UPDATE");
+        /*if (ai.GetNextNode() != null)
             pos = ai.GetNextNode().position;
-        else
+        else*/
             pos = target.transform.position;
         transform.LookAt(pos);
         Vector3 rotation = new Vector3(0, transform.eulerAngles.y, 0);

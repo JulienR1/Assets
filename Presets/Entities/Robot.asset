@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61cd9bbc0eb4903418869bc35491d590, type: 3}
-  m_Name: Enemy
+  m_Name: Robot
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  moveSpeed: 6
+  maxHealth: 75
+  moveSpeed: 4
   acceleration: 0
-  dashDistance: 3
-  dashTime: 0.15
-  dashCooldown: 5
-  deathFame: 15
-  healthPercentToAttack: 0.15
-  fleeRangeMultiplier: 1.5
-  centerDodgeAngle: 90
-  offsetDodgeAngle: 20
+  dashDistance: 4
+  dashTime: 0.12
+  dashCooldown: 3
+  deathFame: 25
+  healthPercentToAttack: 0
+  fleeRangeMultiplier: 0
+  centerDodgeAngle: 100
+  offsetDodgeAngle: 10

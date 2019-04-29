@@ -64,7 +64,7 @@ public class Player : Entity
         currentEnemy = null;
         RaycastHit hit;
         Ray ray = new Ray(myCamera.transform.position, myCamera.transform.forward);
-        if(Physics.Raycast(ray,out hit))
+        if (Physics.Raycast(ray, out hit))
         {
             switch (hit.transform.gameObject.tag)
             {
@@ -123,7 +123,7 @@ public class Player : Entity
             }
             if (Time.time < startMaxFOVTime)
                 myCamera.fieldOfView = Mathf.Lerp(normalFOV, dashFOV, (Time.time - startFOVTime) / (startMaxFOVTime - startFOVTime));
-            else if (Time.time > endMaxFOVTime)            
+            else if (Time.time > endMaxFOVTime)
                 myCamera.fieldOfView = Mathf.Lerp(dashFOV, normalFOV, (Time.time - endMaxFOVTime) / (endFOVTime - endMaxFOVTime));
             else
                 myCamera.fieldOfView = dashFOV;
@@ -155,28 +155,27 @@ public class Player : Entity
         return true;
     }
 
-    public bool verifDoublons(Weapon item) {
-
-        for(int i = 0; i < this.weapons.Count; i++) {
-            if(item == this.weapons[i]) {
+    public bool verifDoublons(Weapon item)
+    {
+        for (int i = 0; i < this.weapons.Count; i++)
+        {
+            if (item == this.weapons[i])
+            {
                 return true;
             }
         }
         return false;
     }
 
-    public void AddWeapon(Weapon item) {
-
+    public void AddWeapon(Weapon item)
+    {
         this.weapons.Add(item);
-
     }
 
     public override void Die()
     {
         FamePoints.MortFame();
         SceneManager.LoadScene("MenuManager", LoadSceneMode.Additive);
-        base.Die();
-       
     }
 
 }

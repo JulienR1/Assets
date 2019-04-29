@@ -11,7 +11,7 @@ public class HudManager : MonoBehaviour
 
     public void Update()
     {
-        scoreHud.text = FamePoints.famePointsAmount.ToString();
+        scoreHud.text = "Fame points: " + FamePoints.famePointsAmount.ToString();
         float healthPercent = 0;
         if ( player != null)
         {

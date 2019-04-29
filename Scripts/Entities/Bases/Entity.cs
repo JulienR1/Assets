@@ -14,11 +14,11 @@ public abstract class Entity : MonoBehaviour, IDamageable
     private AttackProcess currentAttack;
     private int health;
 
-    protected Cooldowns cooldowns;
+    public List<Weapon> weapons;
     protected Weapon currentWeapon;
     protected int weaponNumber = 0;
+    protected Cooldowns cooldowns;
 
-    protected List<Weapon> weapons;
     protected Vector3 moveDirection;
 
     protected virtual void Start()
@@ -53,7 +53,7 @@ public abstract class Entity : MonoBehaviour, IDamageable
 
     protected void Move()
     {
-        controller.Move(moveDirection*stats.moveSpeed);
+        controller.Move(moveDirection * stats.moveSpeed);
     }
 
     protected void Dash()

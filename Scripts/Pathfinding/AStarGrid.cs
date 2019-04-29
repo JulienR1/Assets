@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AStarGrid : MonoBehaviour
 {
+    public bool drawGizmos;
+
     public LayerMask wallMask;
     public Vector2 gridWorldSize;
     public float nodeRadius;
@@ -71,12 +73,15 @@ public class AStarGrid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (grid != null)
-        {
-            foreach(Node n in grid)
+        if (drawGizmos) { 
+        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+            if (grid != null)
             {
-                Gizmos.color = (n.isWall) ? Color.white : Color.blue;
-                Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter-0.1f));
+                foreach (Node n in grid)
+                {
+                    Gizmos.color = (n.isWall) ? Color.white : Color.blue;
+                    Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - 0.1f));
+                }
             }
         }
     }
