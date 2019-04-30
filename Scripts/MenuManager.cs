@@ -13,7 +13,10 @@ public class MenuManager : MonoBehaviour
     public GameObject beforePlayHolder;
     public GameObject creditsHolder;
     public GameObject deadMenuHolder;
+    public GameObject winMenuHolder;
     public GameObject pauseMenuHolder;
+
+    public Text score;
 
     public Slider[] volumeSliders;
     public Toggle[] resolutionToggles;
@@ -48,6 +51,8 @@ public class MenuManager : MonoBehaviour
             {
                 DeadMenu();
             }
+
+            
         }
     }
 
@@ -67,6 +72,7 @@ public class MenuManager : MonoBehaviour
         creditsHolder.SetActive(false);
         beforePlayHolder.SetActive(false);
         deadMenuHolder.SetActive(false);
+        winMenuHolder.SetActive(false);
     }
 
     public void LeaveGame()
@@ -147,6 +153,13 @@ public class MenuManager : MonoBehaviour
         ResetAll();
         mainCamera.clearFlags = CameraClearFlags.SolidColor;
         deadMenuHolder.SetActive(true);
+    }
+
+    public void WinMenu()
+    {
+        ResetAll();
+        winMenuHolder.SetActive(true);
+        score.text = "But with only " + FamePoints.famePointsAmount.ToString() + " Fame points";
     }
 
     public void SetScreenResolution(int i)

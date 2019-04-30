@@ -175,7 +175,7 @@ public class Player : Entity
     public override void Die()
     {
         FamePoints.MortFame();
-        SceneManager.LoadScene("MenuManager", LoadSceneMode.Additive);
+        SceneManager.LoadScene("MenuManager", LoadSceneMode.Single);
     }
 
 }

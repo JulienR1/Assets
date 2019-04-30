@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
@@ -10,9 +11,13 @@ public class WaveManager : MonoBehaviour
     public Transform[] spawnPoints;
     public float spawnTime;
 
+    public bool winO;
+
     public int enemyCount;
     private bool inWave;
     public GameObject skip;
+
+    public MenuManager winMenu;
 
     public void Start()
     {
@@ -28,12 +33,24 @@ public class WaveManager : MonoBehaviour
     {
         if (WaveDone() == true)
         {
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+
+                Win();
+            }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 NextWave();
             }
         }
             
+       
+    }
+    public void Win()
+    {
+        SceneManager.LoadScene("MenuManager", LoadSceneMode.Single);
+        winMenu.WinMenu();
+        
     }
 
     public void Spawn(Transform enemy)
